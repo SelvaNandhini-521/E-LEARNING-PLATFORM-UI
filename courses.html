@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Courses - LearnX</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="container header-flex">
+      <h1 class="logo">LearnX</h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">Explore Our Courses</h2>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="frontend">Frontend</button>
+      <button class="filter-btn" data-category="backend">Backend</button>
+      <button class="filter-btn" data-category="data">Data Science</button>
+      <button class="filter-btn" data-category="devops">DevOps</button>
+    </div>
+
+    <div class="course-grid" id="courseList">
+      <!-- Cards will be injected by JS -->
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 LearnX. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const courses = [
+      { title: "HTML & CSS", desc: "Build beautiful websites.", link: "course.html?course=html", category: "frontend" },
+      { title: "JavaScript Basics", desc: "Interactive web programming.", link: "course.html?course=js", category: "frontend" },
+      { title: "React.js", desc: "Component-based UI design.", link: "course.html?course=react", category: "frontend" },
+      { title: "Python Programming", desc: "Beginner to advanced Python.", link: "course.html?course=python", category: "backend" },
+      { title: "SQL for Databases", desc: "Query data like a pro.", link: "course.html?course=sql", category: "data" },
+      { title: "Node.js", desc: "JavaScript server-side.", link: "course.html?course=node", category: "backend" },
+      { title: "MongoDB", desc: "NoSQL data handling.", link: "course.html?course=mongo", category: "data" },
+      { title: "Docker & Containers", desc: "Deploy apps anywhere.", link: "course.html?course=docker", category: "devops" },
+      { title: "Git & GitHub", desc: "Version control made simple.", link: "course.html?course=git", category: "devops" },
+      { title: "Data Structures", desc: "Core CS knowledge.", link: "course.html?course=ds", category: "data" },
+      { title: "REST API Design", desc: "Connect frontend to backend.", link: "course.html?course=api", category: "backend" },
+      { title: "Tailwind CSS", desc: "Utility-first design system.", link: "course.html?course=tailwind", category: "frontend" }
+    ];
+
+    const courseList = document.getElementById("courseList");
+
+    function displayCourses(category) {
+      courseList.innerHTML = "";
+      const filtered = category === "all" ? courses : courses.filter(c => c.category === category);
+      filtered.forEach(course => {
+        const card = document.createElement("div");
+        card.className = "course-card";
+        card.innerHTML = `
+          <h3>${course.title}</h3>
+          <p>${course.desc}</p>
+          <a href="${course.link}">Start Learning</a>
+        `;
+        courseList.appendChild(card);
+      });
+    }
+
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".filter-btn.active").classList.remove("active");
+        btn.classList.add("active");
+        displayCourses(btn.dataset.category);
+      });
+    });
+
+    displayCourses("all");
+  </script>
+</body>
+</html>
